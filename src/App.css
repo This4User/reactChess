@@ -1,0 +1,57 @@
+:root {
+    --cell-size: calc((100vh + 100vw) / 26);
+    --figure-size: calc(var(--cell-size) * 2 / 3);
+    --board-size: calc(var(--cell-size) * 8);
+}
+
+.app {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board {
+    display: flex;
+    flex-wrap: wrap;
+    width: var(--board-size);
+    height: var(--board-size);
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell img {
+    height: var(--figure-size);
+    width: var(--figure-size);
+    position: relative;
+}
+
+.cell_black {
+    background: #B7DAF3;
+}
+
+.cell_white {
+    background: #4F5BB9;
+}
+
+.cell_selected {
+    background: #99CB95;
+}
+
+.cell_available {
+    background: #99CB95;
+}
+
+.dot {
+    border-radius: 100%;
+    height: calc(var(--cell-size) / 2);
+    width: calc(var(--cell-size) / 2);
+    background: #99CB95;
+}
