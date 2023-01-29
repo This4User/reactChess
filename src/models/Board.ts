@@ -6,11 +6,25 @@ import { Knight } from "./figures/Knight";
 import { Pawn } from "./figures/Pawn";
 import { Queen } from "./figures/Queen";
 import { Rook } from "./figures/Rook";
+import { Player } from "./Player";
 
 export class Board {
 	cells: Cell[][] = [];
+	private _activePlayerColor: Colors | undefined = Colors.WHITE;
+	private players: Array<Player> = [
+		new Player(Colors.WHITE),
+		new Player(Colors.BLACK),
+	];
 
-	public initCells() {
+	get activePlayer(): Player | undefined {
+		return this.players.find(player => player.color === this._activePlayerColor);
+	}
+
+	public toggleActivePlayer() {
+		this._activePlayerColor = this.players.find(player => player.color !== this._activePlayerColor)?.color;
+	}
+
+	public init() {
 		for (let y = 0; y < 8; y++) {
 			const row: Cell [] = [];
 			for (let x = 0; x < 8; x++) {
@@ -19,6 +33,8 @@ export class Board {
 			}
 			this.cells.push(row);
 		}
+
+		this.addFigures();
 	}
 
 	public getCell(x: number, y: number) {
@@ -35,6 +51,7 @@ export class Board {
 		}
 	}
 
+
 	public addFigures() {
 		this.addPawns();
 		this.addKnights();
@@ -45,7 +62,7 @@ export class Board {
 	}
 
 	public reset() {
-		this.initCells();
+		this.init();
 	}
 
 	private addPawns() {

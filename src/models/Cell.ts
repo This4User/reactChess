@@ -95,6 +95,7 @@ export class Cell {
 
 	moveFigure(target: Cell) {
 		if (this.figure?.canMove(target)) {
+			this.board?.toggleActivePlayer();
 			this.figure?.move(target);
 			target.setFigure(this.figure);
 			this.figure = null;

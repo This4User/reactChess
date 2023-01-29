@@ -1,29 +1,33 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import useForceRerender from "../hooks/useForceRerender";
 import { Board as BoardModel } from "../models/Board";
 import { Cell as CellModel } from "../models/Cell";
+import { Player } from "../models/Player";
 import Cell from "./Cell";
 
 interface BoardPropsI {
 	board: BoardModel;
+	forceRerender: Function;
 }
 
-const Board: FC<BoardPropsI> = ({ board }) => {
+const Board: FC<BoardPropsI> = ({ board, forceRerender }) => {
 	const [ selectedCell, setSelectedCell ] = useState<CellModel | null>(null);
-	const forceRerender = useForceRerender();
+	const [ activePlayer, setActivePlayer ] = useState<Player | undefined>(board.activePlayer);
+
 	const highlightCells = useCallback(() => {
 		board.highlightCells(selectedCell);
 		forceRerender();
 	}, [ selectedCell ]);
 	const onCellClick = useCallback((cell: CellModel) => {
-		if (cell.figure) {
+		if (cell.figure && !(cell.figure.color !== activePlayer?.color)) {
 			setSelectedCell(cell);
+			setActivePlayer(board.activePlayer);
 		}
 		if (selectedCell &&
 			selectedCell !== cell &&
 			selectedCell?.figure?.canMove(cell)
 		) {
 			selectedCell.moveFigure(cell);
+			setActivePlayer(board.activePlayer);
 			setSelectedCell(null);
 			forceRerender();
 		}

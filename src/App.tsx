@@ -1,16 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import "./App.css";
 import Board from "./components/Board";
+import ColorStatus from "./components/ColorStatus";
+import { Colors } from "./constants/Colors";
+import useForceRerender from "./hooks/useForceRerender";
 import { Board as BoardModel } from "./models/Board";
 
 function App() {
-	const [ board, setBoard ] = useState<BoardModel>(new BoardModel());
+	const board = useMemo(() => new BoardModel(), []);
+	const forceRerender = useForceRerender();
 
 	const restart = useCallback(() => {
-		const newBoard = new BoardModel();
-		newBoard.initCells();
-		newBoard.addFigures();
-		setBoard(newBoard);
+		board.init();
 	}, []);
 
 	useEffect(() => {
@@ -20,8 +21,10 @@ function App() {
 
 	return (
 		<div className="app">
+			<ColorStatus activeColor={board.activePlayer?.color ?? Colors.WHITE}/>
 			<Board
 				board={board}
+				forceRerender={forceRerender}
 			/>
 		</div>
 	);

@@ -1,15 +1,20 @@
 :root {
-    --cell-size: calc((100vh + 100vw) / 26);
+    --cell-size: calc((100vh + 100vw) / 30);
     --figure-size: calc(var(--cell-size) * 2 / 3);
     --board-size: calc(var(--cell-size) * 8);
+    --active-color: #99CB95;
+    --white-color: #B7DAF3;
+    --black-color: #4F5BB9;
 }
 
 .app {
     width: 100vw;
     height: 100vh;
     display: flex;
+    gap: calc(var(--cell-size) / 2);
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .board {
@@ -34,24 +39,52 @@
 }
 
 .cell_black {
-    background: #B7DAF3;
+    background: var(--black-color);
 }
 
 .cell_white {
-    background: #4F5BB9;
+    background: var(--white-color);
 }
 
 .cell_selected {
-    background: #99CB95;
+    background: var(--active-color);
 }
 
 .cell_available {
-    background: #99CB95;
+    background: var(--active-color);
 }
 
 .dot {
     border-radius: 100%;
     height: calc(var(--cell-size) / 2);
     width: calc(var(--cell-size) / 2);
-    background: #99CB95;
+    background: var(--active-color);
 }
+
+.status {
+    position: relative;
+    display: flex;
+    width: calc(var(--cell-size) * 2);
+    height: var(--cell-size);
+}
+
+.status__cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+}
+
+.status__cell_active {
+    position: absolute;
+    transition: 1s;
+    z-index: 2;
+    border: 6px solid var(--active-color);
+}
+
+.status__cell_white {
+    background: var(--white-color);
+}
+
+.status__cell_black {
+    background: var(--black-color);
+}
+
